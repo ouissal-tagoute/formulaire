@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulaire de Connexion</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px 30px;
+            border-radius: 8px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+        }
+
+        legend {
+            font-size: 1.6em;
+            color: #343a40;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        label {
+            font-weight: 500;
+            color: #495057;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            font-size: 1em;
+            color: #495057;
+            background-color: #f8f9fa;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 1.1em;
+            font-weight: 500;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <fieldset>
+            <legend>Connexion</legend>
+            <form id="myForm">
+                <label for="nom">Nom : *</label>
+                <input type="text" id="nom" onblur="transformerEnMajuscule()">
+                <span id="nomError" class="error-message">Le nom est requis.</span>
+
+                <label for="prenom">Prénom : *</label>
+                <input type="text" id="prenom" onblur="transformerEnMinuscule()">
+                <span id="prenomError" class="error-message">Le prénom est requis.</span>
+
+                <label for="email">Email : *</label>
+                <input type="email" id="email" onblur="validerEmail()">
+                <span id="emailError" class="error-message">L'email doit contenir "@".</span>
+
+                <label for="passw1">Mot de passe : *</label>
+                <input type="password" id="passw1" onblur="validerMotDePasse()">
+                <span id="passw1Error" class="error-message">Le mot de passe doit contenir entre 8 et 25 caractères.</span>
+
+                <label for="passw2">Confirmer le mot de passe : *</label>
+                <input type="password" id="passw2" onblur="validerConfirmationMotDePasse()">
+                <span id="passw2Error" class="error-message">Les mots de passe ne correspondent pas.</span>
+
+                <button type="button" onclick="validerFormulaire()">Envoyer</button>
+            </form>
+        </fieldset>
+    </div>
+
+    <script>
+        function transformerEnMajuscule() {
+            var nom = document.getElementById("nom").value;
+            document.getElementById("nom").value = nom.toUpperCase();
+        }
+
+        function transformerEnMinuscule() {
+            var prenom = document.getElementById("prenom").value;
+            document.getElementById("prenom").value = prenom.toLowerCase();
+        }
+
+        function validerEmail() {
+            var email = document.getElementById("email").value;
+            var emailError = document.getElementById("emailError");
+
+            if (!email.includes("@gmail.com")) {
+                emailError.style.display = "block";
+            } else {
+                emailError.style.display = "none";
+            }
+        }
+
+        function validerMotDePasse() {
+            var passw1 = document.getElementById("passw1").value;
+            var passw1Error = document.getElementById("passw1Error");
+
+            if (passw1.length < 8 || passw1.length > 25) {
+                passw1Error.style.display = "block";
+            } else {
+                passw1Error.style.display = "none";
+            }
+        }
+
+        function validerConfirmationMotDePasse() {
+            var passw1 = document.getElementById("passw1").value;
+            var passw2 = document.getElementById("passw2").value;
+            var passw2Error = document.getElementById("passw2Error");
+
+            if (passw1 !== passw2) {
+                passw2Error.style.display = "block";
+            } else {
+                passw2Error.style.display = "none";
+            }
+        }
+
+        function validerFormulaire() {
+            var nom = document.getElementById("nom").value;
+            var prenom = document.getElementById("prenom").value;
+            var email = document.getElementById("email").value;
+            var passw1 = document.getElementById("passw1").value;
+            var passw2 = document.getElementById("passw2").value;
+            var valid = true;
+
+            // Afficher les messages d'erreur
+            if (nom === "") {
+                document.getElementById("nomError").style.display = "block";
+                valid = false;
+            }
+
+            if (prenom === "") {
+                document.getElementById("prenomError").style.display = "block";
+                valid = false;
+            }
+
+            if (!email.includes("@")) {
+                document.getElementById("emailError").style.display = "block";
+                valid = false;
+            }
+
+            if (passw1.length < 8 || passw1.length > 25) {
+                document.getElementById("passw1Error").style.display = "block";
+                valid = false;
+            }
+
+            if (passw1 !== passw2) {
+                document.getElementById("passw2Error").style.display = "block";
+                valid = false;
+            }
+
+            // Validation finale
+            if (valid) {
+                alert("Formulaire validé !");
+                
+            }
+        }
+    </script>        
+</body>
+</html>
+
+
+
